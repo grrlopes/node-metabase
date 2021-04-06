@@ -14,6 +14,7 @@ interface IMetaBaseprovider {
   findAllMetaGroup: () => Promise<any>;
   createDashGroup: (group: string) => Promise<number>;
   findAllMetaUser: () => Promise<any[]>;
+  findDashByActorId: (id: number) => Promise<any>;
 }
 
 export { IMetaBaseprovider, INewDashprovider };

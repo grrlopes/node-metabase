@@ -1,6 +1,6 @@
 import { knex } from "knex";
 import { v4 as uuidv4 } from "uuid";
-import { IDashboardStore } from "../IPostgrestore";
+import { IDashboardStore, IDashidStore } from "../IPostgrestore";
 const knexfile = require("../../../../knexfile.ts")[process.env.KNEX_ENV ?? "test"];
 
 class Postgrestore implements IDashboardStore {
@@ -14,6 +14,11 @@ class Postgrestore implements IDashboardStore {
       dashboard_id: dash.id,
       created_at: new Date()
     }).returning("*");
+  }
+
+  async getDashByIds(accountId: string, actorId: string, ): Promise<IDashidStore[]> {
+    return await this.db("dashboard").select("dashboard_id")
+      .where({actor_id: actorId, account_id: accountId})
   }
 }
 

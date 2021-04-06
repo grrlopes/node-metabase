@@ -80,6 +80,12 @@ class Metabaseprovider implements IMetaBaseprovider {
       };
     }
   }
+
+  async findDashByActorId(id: number): Promise<any> {
+    const result = await this.axios.get(`/api/dashboard/${id}`);
+    return result.data;
+  }
+
 }
 
 export { Metabaseprovider };
