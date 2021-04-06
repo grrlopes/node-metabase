@@ -68,7 +68,18 @@ class Metabaseprovider implements IMetaBaseprovider {
   }
 
   async findAllMetaDash(): Promise<any> {}
-  async findMetaDashById(): Promise<any> {}
+
+  async findMetaDashById(id: number): Promise<any> {
+    try {
+      const result = await this.axios.get(`/api/dashboard/${id}`);
+      return result.data;
+    } catch (error) {
+      return {
+        code: error.response.status,
+        msg: error.response.statusText,
+      };
+    }
+  }
 }
 
 export { Metabaseprovider };
