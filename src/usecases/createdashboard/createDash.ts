@@ -1,11 +1,11 @@
-import { createDashUseCase } from "./createDashUseCase";
+import { CreateDashUseCase } from "./createDashUseCase";
 
-class createDash {
-  constructor(private readonly createdashUseCase: createDashUseCase) {}
+class CreateDash {
+  constructor(private readonly createdashUseCase: CreateDashUseCase) {}
 
   async createDashboard(obj: any): Promise<void> {
     await this.createdashUseCase.createDashBoard(obj);
   }
 }
 
-export { createDash };
+export { CreateDash };

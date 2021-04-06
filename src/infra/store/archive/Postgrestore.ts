@@ -1,10 +1,10 @@
 import { knex } from "knex";
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from "uuid";
 import { IDashboardStore } from "../IPostgrestore";
-const knexfile = require("../../../../knexfile.ts")[process.env.KNEX_ENV || "test"];
+const knexfile = require("../../../../knexfile.ts")[process.env.KNEX_ENV ?? "test"];
 
 class Postgrestore implements IDashboardStore {
-  private db = knex(knexfile);
+  private readonly db = knex(knexfile);
 
   async save(dash: any): Promise<any> {
     return await this.db("dashboard").insert({

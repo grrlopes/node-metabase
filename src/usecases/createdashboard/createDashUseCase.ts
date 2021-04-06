@@ -3,10 +3,9 @@ import { Metabaseprovider } from "../../infra/provider/archive/Metabaseprovider"
 import { Postgrestore } from "../../infra/store/archive/Postgrestore";
 import { ICreateDashDTO } from "./createDashDTO";
 
-class createDashUseCase {
+class CreateDashUseCase {
   private dashgroup = [];
   private group: any;
-  private groupId: any;
   private userId: any;
   constructor(
     private readonly postgreStore: Postgrestore,
@@ -39,9 +38,9 @@ class createDashUseCase {
 
   private async findAllUser(email: string): Promise<void> {
     const user = await this.metabaseProvider.findAllMetaUser()
-    const objId = user.find((value) => value["email"] === email);
+    const objId = user.find((value) => value.email === email);
     this.userId = objId
   }
 }
 
-export { createDashUseCase };
+export { CreateDashUseCase };
