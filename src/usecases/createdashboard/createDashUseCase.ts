@@ -28,17 +28,17 @@ class CreateDashUseCase {
       this.group = await this.metabaseProvider.createDashGroup(data.group);
     }
 
-    await this.findAllUser(data.email)
+    await this.findAllUser(data.email);
 
     await this.metabaseProvider.setDashGroup(this.group.id, this.userId.id);
 
-    await this.postgreStore.save(dashboard);
+    await this.postgreStore.save(dashboard, account);
   }
 
   private async findAllUser(email: string): Promise<void> {
-    const user = await this.metabaseProvider.findAllMetaUser()
+    const user = await this.metabaseProvider.findAllMetaUser();
     const objId = user.find((value) => value.email === email);
-    this.userId = objId
+    this.userId = objId;
   }
 }
 
