@@ -7,10 +7,22 @@ class Metabaseprovider implements IMetaBaseprovider {
     this.axios = Axios.create({
       baseURL: process.env.METABASE_HOST,
       headers: {
-        "X-Metabase-Session": process.env.METABASE_KEY,
+        "X-Metabase-Session": process.env.METABASE_ADM_ID,
         "Content-Type": "application/json",
       },
     });
+  }
+
+  async generateMetaUrl(token: string): Promise<any> {
+    try {
+      const result = await this.axios.get(`/api/embed/dashboard/${token}`);
+      return result.data;
+    } catch (error) {
+      return {
+        code: error.response.status,
+        msg: error.response.statusText,
+      };
+    }
   }
 
   async createMetaDash(dash: INewDashprovider): Promise<any> {
@@ -85,7 +97,6 @@ class Metabaseprovider implements IMetaBaseprovider {
     const result = await this.axios.get(`/api/dashboard/${id}`);
     return result.data;
   }
-
 }
 
 export { Metabaseprovider };
