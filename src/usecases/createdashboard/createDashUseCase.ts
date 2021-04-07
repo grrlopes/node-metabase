@@ -29,7 +29,6 @@ class CreateDashUseCase {
     }
 
     await this.findAllUser(data.email)
-    console.log(this.group)
 
     await this.metabaseProvider.setDashGroup(this.group.id, this.userId.id);
 

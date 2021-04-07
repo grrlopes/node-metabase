@@ -16,6 +16,7 @@ interface IMetaBaseprovider {
   findAllMetaUser: () => Promise<any[]>;
   findDashByActorId: (id: number) => Promise<any>;
   generateMetaUrl: (token: string) => Promise<any>;
+  removeMetaDashById: (id: number) => Promise<any>;
 }
 
 export { IMetaBaseprovider, INewDashprovider };

@@ -12,6 +12,17 @@ class Metabaseprovider implements IMetaBaseprovider {
       },
     });
   }
+  async removeMetaDashById(id: number): Promise<any> {
+    try {
+      const result = await this.axios.delete(`/api/dashboard/${id}`);
+      return { code: result.status, msg: `Dashboard ${id} was removed` };
+    } catch (error) {
+      return {
+        code: error.response.status,
+        msg: error.response.statusText,
+      };
+    }
+  }
 
   async generateMetaUrl(token: string): Promise<any> {
     try {
