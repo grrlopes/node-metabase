@@ -1,5 +1,4 @@
 import { knex } from "knex";
-import { v4 as uuidv4 } from "uuid";
 import { IDashboardStore, IDashidStore, IAccountStore } from "../IPostgrestore";
 const knexfile = require("../../../../knexfile.ts")[process.env.KNEX_ENV ?? "test"];
 
@@ -8,12 +7,12 @@ class Postgrestore implements IDashboardStore {
 
   async save(dash: any, account: IAccountStore): Promise<any> {
     return await this.db("dashboard").insert({
-      id: uuidv4(),
+      id: account.id,
       actor_id: account.actor_id,
-      account_id: account.actor_id,
+      account_id: account.account_id,
       dashboard_id: dash.id,
       server: account.server,
-      created_at: new Date(),
+      created_at: dash.created_at,
       description: account.description,
       name: account.name,
     }).returning("*");
