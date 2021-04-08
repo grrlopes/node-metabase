@@ -13,7 +13,7 @@ class metabase {
    * createDashboard({email: "ze@ze.ze", group: "yyy", name: "xxx", description: "vvv"});
    * @returns {Object} It shall return object.
    **/
-  async createDashboard(obj: any) {
+  async createDashboard(obj: any): Promise<any> {
     return await createdash.createDashboard(obj);
   }
 
@@ -21,7 +21,7 @@ class metabase {
    * @param {Number} number It should be number e.g readDashById(10)
    * @returns {Object} return an object
    **/
-  async readDashById(dashId: number) {
+  async readDashById(dashId: number): Promise<any> {
     return await readdash.readDashById({ id: dashId });
   }
 
@@ -29,7 +29,7 @@ class metabase {
    * @param {String} string  e.g: listDashByActorId(47fefa2, 56bdfae )
    * @returns {Object} return object
    **/
-  async listDashByActorId(accountId: string, actorId: string) {
+  async listDashByActorId(accountId: string, actorId: string): Promise<any> {
     return await listDash.listDashByActorId({
       account_id: accountId,
       actor_id: actorId,
@@ -38,20 +38,23 @@ class metabase {
 
   /**
    * @param {Params} params number and object e.g: viewGenDashboard(61, params: "")
-   * params could be either empty or object like params: {sample1: "value1", sample2: value2}
+   * params could be either empty or object like params:{sample1: "value1", sample2: value2}
    * @returns {object} return object
    **/
-   async viewGenDashboard(dashid: number, params: any) {
-    return await viewdash.viewGenDashboard({dashboard_id: dashid, params: params})
+  async viewGenDashboard(dashid: number, params: any): Promise<any> {
+    return await viewdash.viewGenDashboard({
+      dashboard_id: dashid,
+      params: params,
+    });
   }
 
   /**
    * @param {Number} number Must be type number e.g: removedash(61)
    * @returns {object} return object 'code and message'
    **/
-   async removedash(dashid: number) {
-    return await removedash.removeDashById({ id: dashid })
+  async removedash(dashid: number): Promise<any> {
+    return await removedash.removeDashById({ id: dashid });
   }
 }
 
-export { metabase }
+export { metabase };

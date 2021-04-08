@@ -9,8 +9,8 @@ class Postgrestore implements IDashboardStore {
   async save(dash: any, account: IAccountStore): Promise<any> {
     return await this.db("dashboard").insert({
       id: uuidv4(),
-      actor_id: uuidv4(),
-      account_id: uuidv4(),
+      actor_id: account.actor_id,
+      account_id: account.actor_id,
       dashboard_id: dash.id,
       server: account.server,
       created_at: new Date(),
@@ -20,9 +20,15 @@ class Postgrestore implements IDashboardStore {
   }
 
   async getDashByIds(accountId: string, actorId: string, ): Promise<IDashidStore[]> {
-    return await this.db("dashboard").select("dashboard_id")
+    return await this.db("dashboard").select(["dashboard_id", "server"])
       .where({actor_id: actorId, account_id: accountId})
   }
+
+  async getDashById(dashId: number): Promise<IDashidStore[]> {
+    return await this.db("dashboard").select("server")
+    .where({dashboard_id: dashId})
+  }
+
 }
 
 export { Postgrestore };

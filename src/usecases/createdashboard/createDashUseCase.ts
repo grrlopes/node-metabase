@@ -6,7 +6,7 @@ import { ICreateDashDTO } from "./createDashDTO";
 class CreateDashUseCase {
   private dashgroup = [];
   private group: any;
-  private userId: any;
+  private userId: any ;
   constructor(
     private readonly postgreStore: Postgrestore,
     private readonly metabaseProvider: Metabaseprovider
@@ -14,6 +14,8 @@ class CreateDashUseCase {
 
   async createDashBoard(data: ICreateDashDTO): Promise<any> {
     const account = new Account(data);
+
+    this.metabaseProvider.metaBaseUrl = account.server;
 
     const dashboard = await this.metabaseProvider.createMetaDash(account);
 

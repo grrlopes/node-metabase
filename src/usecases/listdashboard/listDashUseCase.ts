@@ -11,11 +11,12 @@ class ListDashUseCase {
 
   async listDashBoard(_data: IListIds): Promise<any> {
     const data = new Listdashboard(_data);
-    const dashId = await this.postgreStore.getDashByIds(
+    const dashboard = await this.postgreStore.getDashByIds(
       data.account_id,
       data.actor_id
     );
-    const id_ = dashId[0].dashboard_id
+    this.metabaseProvider.metaBaseUrl = dashboard[0].server;
+    const id_ = dashboard[0].dashboard_id;
     return await this.metabaseProvider.findMetaDashById(id_);
   }
 }
