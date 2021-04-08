@@ -12,10 +12,12 @@ class ReadDashUseCase {
   async readDashBoard(data: IReadDashDTO): Promise<any> {
     const _data = new Dashid(data);
     const dashboard = await this.postgreStore.getDashById(_data.dashId);
+    if (dashboard.length === 0) {
+      throw new Error("DashBoard not found");
+    }
     this.metabaseProvider.metaBaseUrl = dashboard[0].server;
     return await this.metabaseProvider.findMetaDashById(_data.dashId);
   }
-
 }
 
 export { ReadDashUseCase };

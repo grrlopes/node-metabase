@@ -15,6 +15,11 @@ class ListDashUseCase {
       data.account_id,
       data.actor_id
     );
+
+    if (dashboard.length === 0) {
+      throw new Error("DashBoard not found");
+    }
+
     this.metabaseProvider.metaBaseUrl = dashboard[0].server;
     const id_ = dashboard[0].dashboard_id;
     return await this.metabaseProvider.findMetaDashById(id_);

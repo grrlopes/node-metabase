@@ -5,7 +5,11 @@ class ListDash {
   constructor(private readonly listdashUseCase: ListDashUseCase) {}
 
   async listDashByActorId(data: IListIds): Promise<any> {
-    return await this.listdashUseCase.listDashBoard(data);
+    try {
+      return await this.listdashUseCase.listDashBoard(data);
+    } catch (error) {
+      return error.message;
+    }
   }
 }
 

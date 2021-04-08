@@ -19,8 +19,8 @@ class CreateDashUseCase {
 
     const dashboard = await this.metabaseProvider.createMetaDash(account);
 
-    if (dashboard.code) {
-      return dashboard;
+    if (dashboard.errno) {
+      throw dashboard;
     }
 
     this.dashgroup = await this.metabaseProvider.findAllMetaGroup();
@@ -34,7 +34,7 @@ class CreateDashUseCase {
 
     await this.metabaseProvider.setDashGroup(this.group.id, this.userId.id);
 
-    await this.postgreStore.save(dashboard, account);
+    return await this.postgreStore.save(dashboard, account);
   }
 
   private async findAllUser(email: string): Promise<void> {

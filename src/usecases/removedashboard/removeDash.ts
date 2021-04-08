@@ -5,8 +5,12 @@ class RemoveDash {
   constructor(private readonly removeUseCase: RemoveDashUseCase) {}
 
   async removeDashById(id: IRemoveDashDTO): Promise<any> {
-    const data = await this.removeUseCase.removeDashBoard(id);
-    return data;
+    try {
+      const result = await this.removeUseCase.removeDashBoard(id);
+      return { code: result.status, msg: `Dashboard ${id} was removed` };
+    } catch (error) {
+      return error.message;
+    }
   }
 }
 
