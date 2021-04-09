@@ -3,13 +3,17 @@ const knexfile = require("../../../knexfile")["test"];
 import { listDash } from ".";
 
 const db = knex(knexfile);
-beforeAll(async () => {
+beforeEach(async () => {
   await db("dashboard").del();
-  await insert();
+});
+
+afterAll(async () => {
+  await db("dashboard").del();
 });
 
 describe("### LIST DASHBOARD BY ACTOR/ACCOUNT ID ###", () => {
   it("Should return object dashboard", async () => {
+    await createdashboard();
     const dashboard = await listDash.listDashByActorId({
       account_id: "2236785d-0a32-4081-9738-049f5f87ef8b",
       actor_id: "2136785d-0a32-4081-9738-049f5f87ef8b",
@@ -18,6 +22,7 @@ describe("### LIST DASHBOARD BY ACTOR/ACCOUNT ID ###", () => {
   });
 
   it("Should evaluate return error passing id wrong", async () => {
+    await createdashboard();
     const dashboard = await listDash.listDashByActorId({
       account_id: "2236785d-0a32-4081-9738-049f5f87ef8b",
       actor_id: "1111185d-0a32-4081-9738-049f5f87ef8b",
@@ -26,6 +31,8 @@ describe("### LIST DASHBOARD BY ACTOR/ACCOUNT ID ###", () => {
   });
 
   it("Return error when it doesn't get metabase response", async () => {
+    const url = "http://beluga:3000";
+    await createdashboard(url);
     const dashboard = await listDash.listDashByActorId({
       account_id: "2236785d-0a32-4081-9738-049f5f87ef8b",
       actor_id: "2136785d-0a32-4081-9738-049f5f87ef8b",
@@ -34,13 +41,13 @@ describe("### LIST DASHBOARD BY ACTOR/ACCOUNT ID ###", () => {
   });
 });
 
-async function insert() {
+async function createdashboard(url?: string) {
   await db("dashboard").insert({
     id: "2036785d-0a32-4081-9738-049f5f87ef8b",
     actor_id: "2136785d-0a32-4081-9738-049f5f87ef8b",
     account_id: "2236785d-0a32-4081-9738-049f5f87ef8b",
-    dashboard_id: 1,
-    server: process.env.METABASE_HOST,
+    dashboard_id: 91123,
+    server: url || process.env.METABASE_HOST,
     created_at: "2021-04-08 07:19:33.455+00",
     description: "I don't know what i could write here",
     name: "nobody",

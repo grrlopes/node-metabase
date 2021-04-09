@@ -7,6 +7,10 @@ afterEach(async () => {
   await db("dashboard").del();
 });
 
+beforeAll(async () => {
+  await db("dashboard").del();
+});
+
 describe("### CREATE DASHBOARD ###", () => {
   it("Should check partial return of dashboard created", async () => {
     const dashboard = await createdash.createDashboard({
@@ -15,7 +19,7 @@ describe("### CREATE DASHBOARD ###", () => {
       email: "ze@ze.ze",
       group: "teste3336",
       name: "teste2",
-      description: "I don't know what i could write here dude",
+      description: "I don't know what i could write here",
       server: process.env.METABASE_HOST ?? "",
     });
     expect(dashboard).toBeTruthy();
@@ -34,7 +38,3 @@ describe("### CREATE DASHBOARD ###", () => {
     expect(dashboard).toMatch("connect ECONNREFUSED");
   });
 });
-
-function url() {
-  return process.env.METABASE_HOST;
-}

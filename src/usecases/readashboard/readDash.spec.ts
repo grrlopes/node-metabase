@@ -1,38 +1,51 @@
 import { knex } from "knex";
 const knexfile = require("../../../knexfile")["test"];
 import { readdash } from ".";
+import { createdash } from "../createdashboard";
 
 const db = knex(knexfile);
 beforeAll(async () => {
   await db("dashboard").del();
-  await insert();
 });
 
 afterAll(async () => {
   await db("dashboard").del();
 });
 
-describe("### LIST DASHBOARD SETTING ###", () => {
+describe("### READ DASHBOARD SETTING ###", () => {
   it("Should return object of setting", async () => {
-    const dashboard = await readdash.readDashById({ id: 1 });
-    expect(dashboard).toStrictEqual({ code: 404, msg: "Not Found" });
+    const dashID = await createdashboard();
+    const dashboard = await readdash.readDashById({
+      id: dashID[0].dashboard_id,
+    });
+    expect(dashboard).toEqual(
+      expect.objectContaining({
+        archived: false,
+        name: "teste2",
+        description: "I'm in doubt if i should write down here",
+        param_values: null,
+        can_write: true,
+        enable_embedding: false,
+        collection_id: null,
+        show_in_getting_started: false,
+      })
+    );
   });
 
-  it("Should evaluete return error", async () => {
+  it("Should evaluate return error", async () => {
     const dashboard = await readdash.readDashById({ id: 22 });
     expect(dashboard).toStrictEqual("DashBoard not found");
   });
 });
 
-async function insert() {
-  await db("dashboard").insert({
-    id: "2036785d-0a32-4081-9738-049f5f87ef8b",
+async function createdashboard() {
+  return await createdash.createDashboard({
     actor_id: "2136785d-0a32-4081-9738-049f5f87ef8b",
     account_id: "2236785d-0a32-4081-9738-049f5f87ef8b",
-    dashboard_id: 1,
-    server: process.env.METABASE_HOST,
-    created_at: "2021-04-08 07:19:33.455+00",
-    description: "I don't know what i could write here",
-    name: "nobody",
+    email: "ze@ze.ze",
+    group: "teste3336",
+    name: "teste2",
+    description: "I'm in doubt if i should write down here",
+    server: process.env.METABASE_HOST ?? "",
   });
 }

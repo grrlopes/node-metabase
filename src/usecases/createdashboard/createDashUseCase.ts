@@ -6,7 +6,7 @@ import { ICreateDashDTO } from "./createDashDTO";
 class CreateDashUseCase {
   private dashgroup = [];
   private group: any;
-  private userId: any ;
+  private userId: any;
   constructor(
     private readonly postgreStore: Postgrestore,
     private readonly metabaseProvider: Metabaseprovider
@@ -32,8 +32,6 @@ class CreateDashUseCase {
 
     await this.findAllUser(data.email);
 
-    await this.metabaseProvider.setDashGroup(this.group.id, this.userId.id);
-
     return await this.postgreStore.save(dashboard, account);
   }
 
@@ -41,6 +39,9 @@ class CreateDashUseCase {
     const user = await this.metabaseProvider.findAllMetaUser();
     const objId = user.find((value) => value.email === email);
     this.userId = objId;
+    if (this.userId) {
+      await this.metabaseProvider.setDashGroup(this.group.id, this.userId.id);
+    }
   }
 }
 
