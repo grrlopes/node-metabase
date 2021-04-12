@@ -45,4 +45,4 @@
     - name: Adding the ADM_ID into .env file
       lineinfile:
         dest=/usr/app/.env line='export METABASE_ADM_ID={{ adminId.json.id }}'
-        insertafter='EOF' state=present
+        insertafter='EOF' state=present create=yes
