@@ -33,7 +33,7 @@ describe("### CREATE DASHBOARD ###", () => {
       group: "teste3336",
       name: "teste2",
       description: "What if nobody writes nothing here so what happens ?",
-      server: "http://beluga:3001/",
+      server: process.env.METABASE_HOST_FORTEST ?? "",
     });
     expect(dashboard).toMatch("connect ECONNREFUSED");
   });

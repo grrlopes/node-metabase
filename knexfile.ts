@@ -4,7 +4,7 @@ module.exports = {
   test: {
     client: "postgresql",
     connection: {
-      host: "beluga",
+      host: "db01",
       database: "metabase",
       user: "postgres",
       password: "postgres"

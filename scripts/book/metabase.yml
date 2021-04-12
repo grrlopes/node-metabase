@@ -1,0 +1,48 @@
+---
+- hosts: localhost
+  # become: true
+  tasks:
+    - name: Install nix packages
+      apt: name={{item}} state=present update_cache=no
+      with_items:
+        - jq
+        - curl
+
+    - name: Getting metabase setup-token
+      uri:
+        url: "{{ lookup('env','METABASE_HOST') }}api/session/properties"
+        method: GET
+        return_content: yes
+        body_format: json
+        status_code: 200
+      register: setupToken
+
+    - name: Debug metabase setup-token
+      debug:
+        msg: "{{ setupToken.json['setup-token'] }}"
+
+    - name: Register admin user
+      uri:
+        url: "{{ lookup('env','METABASE_HOST') }}api/setup"
+        method: POST
+        return_content: yes
+        body_format: json
+        body:
+          {
+            "prefs": { "allow_tracking": true, "site_name": "teste" },
+            "token": "{{ setupToken.json['setup-token'] }}",
+            "user":
+              {
+                "first_name": "teste",
+                "password": "12345678",
+                "last_name": "teste",
+                "email": "teste@teste.teste",
+              },
+          }
+        status_code: 200
+      register: adminId
+
+    - name: Adding the ADM_ID into .env file
+      lineinfile:
+        dest=/usr/app/.env line='export METABASE_ADM_ID={{ adminId.json.id }}'
+        insertafter='EOF' state=present

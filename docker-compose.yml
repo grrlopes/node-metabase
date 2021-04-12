@@ -4,31 +4,48 @@ services:
     image: metabase/metabase:latest
     container_name: metabase01
     volumes:
-    - /dev/urandom:/dev/random:ro
+      - /dev/urandom:/dev/random:ro
     ports:
       - 3000:3000
     environment:
       MB_DB_TYPE: postgres
       MB_DB_DBNAME: metabase
       MB_DB_PORT: 5432
-      MB_DB_USER: "root"
-      MB_DB_PASS: "root"
+      MB_DB_USER: "postgres"
+      MB_DB_PASS: "postgres"
       MB_DB_HOST: db01
     networks:
       - metanet1
     depends_on:
       - db01
+
   db01:
     image: postgres:latest
     container_name: postgres-metabase
     environment:
-      POSTGRES_USER: "root"
+      POSTGRES_USER: "postgres"
       POSTGRES_DB: metabase
-      POSTGRES_PASSWORD: "root"
+      POSTGRES_PASSWORD: "postgres"
     networks:
       - metanet1
     ports:
-     - 5433:5432
+      - 5433:5432
+
+  app:
+    image: node:14.16.0
+    container_name: app
+    networks:
+      - metanet1
+    volumes:
+      - .:/usr/app
+    working_dir: /usr/app
+    command: bash ./scripts/start.sh
+    depends_on:
+      - metabase
+    environment:
+      KNEX_ENV: ${KNEX_ENV}
+      METABASE_HOST: ${METABASE_HOST}
+      METABASE_EMBED_KEY: ${METABASE_EMBED_KEY}
 networks:
   metanet1:
     driver: bridge
