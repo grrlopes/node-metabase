@@ -1,0 +1,31 @@
+image: atlassian/default-image:2
+
+options:
+  docker: true
+
+pipelines:
+  default:
+    - step:
+        name: Build and Test
+        script:
+          - echo //registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
+          - docker-compose run -T --name nodejs-metabase app
+          - docker-compose down
+  tags:
+    npm-*:
+      - step:
+          name: Build and Test Pre-Prod
+          script:
+            - echo //registry.npmjs.org/:_authToken=$NPM_TOKEN >> .npmrc
+            - docker-compose run -T --name nodejs-metabase app
+            - docker-compose down
+      - step:
+          name: Deploy to Production
+          image: node:14.16.0
+          deployment: Production
+          script:
+            - npm install
+            - npm run build
+            - pipe: atlassian/npm-publish:0.3.1
+              variables:
+                NPM_TOKEN: $NPM_TOKEN
