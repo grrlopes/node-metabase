@@ -46,3 +46,46 @@
       lineinfile:
         dest=/usr/app/.env line='export METABASE_ADM_ID={{ adminId.json.id }}'
         insertafter='EOF' state=present create=yes
+
+    - name: Enable embedding
+      uri:
+        url: "{{ lookup('env','METABASE_HOST') }}api/setting/enable-embedding"
+        method: PUT
+        headers:
+          Cookie: 'metabase.SESSION={{ adminId.json.id }}'
+        body_format: json
+        body: {
+          value: true
+        }
+        status_code: 204
+      register: enable_embedd
+
+    - name: Putting embedd key up
+      uri:
+        url: "{{ lookup('env','METABASE_HOST') }}api/setting/embedding-secret-key"
+        method: PUT
+        headers:
+          Cookie: 'metabase.SESSION={{ adminId.json.id }}'
+        body_format: json
+        body: {
+          value: "2adbc055dda8dcafba18d5949ef564ada8b8533a54f3b0ccf125d1441c0c4cd3"
+        }
+        status_code: 204
+
+    - name: Getting embedding key
+      uri:
+        url: "{{ lookup('env','METABASE_HOST') }}api/setting/embedding-secret-key"
+        return_content: yes
+        method: GET
+        headers:
+          Content-Type: "application/json"
+          Cookie: 'metabase.SESSION={{ adminId.json.id }}'
+        status_code: 200
+      register: embed_id
+    - debug:
+        msg: "{{ embed_id.content }}"
+
+    - name: Adding the EMBED_KEY into .env file
+      lineinfile:
+        dest=/usr/app/.env line='export METABASE_EMBED_KEY={{ embed_id.content }}'
+        insertafter='EOF' state=present create=yes
