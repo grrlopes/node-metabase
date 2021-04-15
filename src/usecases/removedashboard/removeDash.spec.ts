@@ -4,6 +4,10 @@ import { removedash } from ".";
 import { createdash } from "../createdashboard";
 
 const db = knex(knexfile);
+beforeEach(async () => {
+  await db("dashboard").del();
+});
+
 afterAll(async () => {
   await db("dashboard").del();
 });
