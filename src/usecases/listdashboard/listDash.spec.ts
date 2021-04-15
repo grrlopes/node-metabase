@@ -13,6 +13,7 @@ afterAll(async () => {
 
 describe("### LIST DASHBOARD BY ACTOR/ACCOUNT ID ###", () => {
   it("Should return object dashboard", async () => {
+    jest.setTimeout(30000)
     await createdashboard();
     const dashboard = await listDash.listDashByActorId({
       account_id: "2236785d-0a32-4081-9738-049f5f87ef8b",
@@ -22,6 +23,7 @@ describe("### LIST DASHBOARD BY ACTOR/ACCOUNT ID ###", () => {
   });
 
   it("Should evaluate return error passing id wrong", async () => {
+    jest.setTimeout(30000)
     await createdashboard();
     const dashboard = await listDash.listDashByActorId({
       account_id: "2236785d-0a32-4081-9738-049f5f87ef8b",
@@ -31,6 +33,7 @@ describe("### LIST DASHBOARD BY ACTOR/ACCOUNT ID ###", () => {
   });
 
   it("Return error when it doesn't get metabase response", async () => {
+    jest.setTimeout(30000)
     const url = ""
     await createdashboard(url);
     const dashboard = await listDash.listDashByActorId({

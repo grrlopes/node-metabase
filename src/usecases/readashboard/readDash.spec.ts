@@ -14,6 +14,7 @@ afterAll(async () => {
 
 describe("### READ DASHBOARD SETTING ###", () => {
   it("Should return object of setting", async () => {
+    jest.setTimeout(30000)
     const dashID = await createdashboard();
     const dashboard = await readdash.readDashById({
       id: dashID[0].dashboard_id,
@@ -33,6 +34,7 @@ describe("### READ DASHBOARD SETTING ###", () => {
   });
 
   it("Should evaluate return error", async () => {
+    jest.setTimeout(30000)
     const dashboard = await readdash.readDashById({ id: 22 });
     expect(dashboard).toStrictEqual("DashBoard not found");
   });

@@ -14,6 +14,7 @@ afterAll(async () => {
 
 describe("### VIEW DASHBOARD BY ID ###", () => {
   it("Should evaluate when dashboard is not found", async () => {
+    jest.setTimeout(30000)
     const dashboard = await viewdash.viewGenDashboard({
       dashboard_id: 67,
       params: "",
@@ -22,6 +23,7 @@ describe("### VIEW DASHBOARD BY ID ###", () => {
   });
 
   it("Should evaluate when dashboard is not embeded", async () => {
+    jest.setTimeout(30000)
     const newdashboard = await createdashboard();
     const dashboard = await viewdash.viewGenDashboard({
       dashboard_id: newdashboard[0].dashboard_id,
