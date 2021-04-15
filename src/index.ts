@@ -10,7 +10,9 @@ import { removedash } from "./usecases/removedashboard";
 class metabase {
   /**
    * @param {Object} object An sample of calling
-   * createDashboard({email: "ze@ze.ze", group: "yyy", name: "xxx", description: "vvv"});
+   * createDashboard( actor_id: "213678", account_id: "22367",
+   * email: "ze@ze.ze", group: "teste3336", name: "teste2",
+   * description: "Sample test", server: http://metabase:3000 );
    * @returns {Object} It shall return object.
    **/
   async createDashboard(obj: any): Promise<any> {

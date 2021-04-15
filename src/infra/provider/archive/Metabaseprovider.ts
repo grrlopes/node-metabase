@@ -31,8 +31,7 @@ class Metabaseprovider implements IMetaBaseprovider {
       return result.data;
     } catch (error) {
       return {
-        code: error.response.status,
-        msg: error.response.statusText,
+        message: error.response.data,
       };
     }
   }

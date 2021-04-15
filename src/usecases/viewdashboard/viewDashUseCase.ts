@@ -17,6 +17,9 @@ class ViewDashUseCase {
     };
     const token = sign(payload, key);
     const dashboard = await this.postgreStore.getDashById(dashid.dashboard_id);
+    if (dashboard.length === 0) {
+      throw { message: "Not found" };
+    }
     this.metabaseProvider.metaBaseUrl = dashboard[0].server;
     return this.metabaseProvider.generateMetaUrl(token);
   }

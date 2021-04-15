@@ -52,11 +52,9 @@
         url: "{{ lookup('env','METABASE_HOST') }}api/setting/enable-embedding"
         method: PUT
         headers:
-          Cookie: 'metabase.SESSION={{ adminId.json.id }}'
+          Cookie: "metabase.SESSION={{ adminId.json.id }}"
         body_format: json
-        body: {
-          value: true
-        }
+        body: { value: true }
         status_code: 204
       register: enable_embedd
 
@@ -65,11 +63,12 @@
         url: "{{ lookup('env','METABASE_HOST') }}api/setting/embedding-secret-key"
         method: PUT
         headers:
-          Cookie: 'metabase.SESSION={{ adminId.json.id }}'
+          Cookie: "metabase.SESSION={{ adminId.json.id }}"
         body_format: json
-        body: {
-          value: "2adbc055dda8dcafba18d5949ef564ada8b8533a54f3b0ccf125d1441c0c4cd3"
-        }
+        body:
+          {
+            value: "2adbc055dda8dcafba18d5949ef564ada8b8533a54f3b0ccf125d1441c0c4cd3",
+          }
         status_code: 204
 
     - name: Getting embedding key
@@ -79,7 +78,7 @@
         method: GET
         headers:
           Content-Type: "application/json"
-          Cookie: 'metabase.SESSION={{ adminId.json.id }}'
+          Cookie: "metabase.SESSION={{ adminId.json.id }}"
         status_code: 200
       register: embed_id
     - debug:

@@ -5,7 +5,11 @@ class ViewDash {
   constructor(private readonly viewdashUseCase: ViewDashUseCase) {}
 
   async viewGenDashboard(data: IViewDashDTO): Promise<any> {
-    return await this.viewdashUseCase.generateUrl(data);
+    try {
+      return await this.viewdashUseCase.generateUrl(data);
+    } catch (error) {
+      return error
+    }
   }
 }
 
