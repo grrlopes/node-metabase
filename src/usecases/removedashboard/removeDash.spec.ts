@@ -16,7 +16,6 @@ afterAll(async () => {
 
 describe("### REMOVE DASHBOARD BY ID ###", () => {
   it("Should return 204 message after removed", async () => {
-    jest.setTimeout(30000)
     const newdashboard = await createdashboard();
     const dashboard = await removedash.removeDashById({
       id: newdashboard[0].id,
@@ -26,7 +25,6 @@ describe("### REMOVE DASHBOARD BY ID ###", () => {
   });
 
   it("Should return error whether not found dashboard id on database", async () => {
-    jest.setTimeout(30000)
     const dashboard = await removedash.removeDashById({
       id: "9936785d-0a32-4081-9738-049f5f87ef8b",
       dashid: 99203

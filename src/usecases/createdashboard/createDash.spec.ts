@@ -27,7 +27,6 @@ describe("### CREATE DASHBOARD ###", () => {
   });
 
   it("Should evalute wrong metabase address", async () => {
-    jest.setTimeout(30000)
     const dashboard = await createdash.createDashboard({
       actor_id: "2136785d-0a32-4081-9738-049f5f87ef8b",
       account_id: "2236785d-0a32-4081-9738-049f5f87ef8b",
