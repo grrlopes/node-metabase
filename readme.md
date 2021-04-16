@@ -24,3 +24,4 @@ METABASE_HOST_FORTEST=http://metabase:3001/
 To run docker, just run 
 ```
 docker-compose up 
+```

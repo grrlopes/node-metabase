@@ -24,6 +24,8 @@
     - name: Register admin user
       uri:
         url: "{{ lookup('env','METABASE_HOST') }}api/setup"
+        async: 300
+        poll: 10
         method: POST
         return_content: yes
         body_format: json
@@ -42,10 +44,14 @@
         status_code: 200
       register: adminId
 
+    - name: Debug metabase Admin-ID
+      debug:
+        msg: "{{ adminId.json }}"
+
     - name: Adding the ADM_ID into .env file
       lineinfile:
         dest=/usr/app/.env line='export METABASE_ADM_ID={{ adminId.json.id }}'
-        insertafter='EOF' state=present create=yes
+        state=present create=yes
 
     - name: Enable embedding
       uri:
