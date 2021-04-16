@@ -51,11 +51,12 @@ class metabase {
   }
 
   /**
-   * @param {Number} number Must be type number e.g: removedash(61)
+   * @param {Number} number Must be type uuid and number
+   * e.g: removedash(22efabcdd, 61)
    * @returns {object} return object 'code and message'
    **/
-  async removedash(dashid: number): Promise<any> {
-    return await removedash.removeDashById({ id: dashid });
+  async removedash(uuid: string, dashid: number): Promise<any> {
+    return await removedash.removeDashById({ id: uuid, dashid: dashid });
   }
 }
 

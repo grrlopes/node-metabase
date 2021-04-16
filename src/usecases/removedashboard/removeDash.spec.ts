@@ -1,7 +1,9 @@
+import { Metabaseprovider } from "../../infra/provider/archive/Metabaseprovider";
 import { knex } from "knex";
 const knexfile = require("../../../knexfile")["test"];
 import { removedash } from ".";
 import { createdash } from "../createdashboard";
+
 
 const db = knex(knexfile);
 beforeEach(async () => {
@@ -17,7 +19,8 @@ describe("### REMOVE DASHBOARD BY ID ###", () => {
     jest.setTimeout(30000)
     const newdashboard = await createdashboard();
     const dashboard = await removedash.removeDashById({
-      id: newdashboard[0].dashboard_id,
+      id: newdashboard[0].id,
+      dashid: newdashboard[0].dashboard_id
     });
     expect(dashboard).toEqual(expect.objectContaining({ code: 204 }));
   });
@@ -25,9 +28,10 @@ describe("### REMOVE DASHBOARD BY ID ###", () => {
   it("Should return error whether not found dashboard id on database", async () => {
     jest.setTimeout(30000)
     const dashboard = await removedash.removeDashById({
-      id: 99203,
+      id: "9936785d-0a32-4081-9738-049f5f87ef8b",
+      dashid: 99203
     });
-    expect(dashboard).toStrictEqual("DashBoard not found");
+    expect(dashboard).toStrictEqual({message: "DashBoard not found"});
   });
 });
 

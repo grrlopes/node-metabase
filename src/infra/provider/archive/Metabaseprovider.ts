@@ -1,5 +1,5 @@
 import Axios, { AxiosInstance } from "axios";
-import { IMetaBaseprovider, INewDashprovider } from "../IMetabaseprovider";
+import { IMetaBaseprovider, INewDashprovider, IRmDashRespprovider } from "../IMetabaseprovider";
 
 class Metabaseprovider implements IMetaBaseprovider {
   private readonly axios: AxiosInstance;
@@ -21,8 +21,15 @@ class Metabaseprovider implements IMetaBaseprovider {
     return this.axios.defaults.baseURL;
   }
 
-  async removeMetaDashById(id: number): Promise<any> {
-    return await this.axios.delete(`/api/dashboard/${id}`);
+  async removeMetaDashById(id: number): Promise<IRmDashRespprovider> {
+    try {
+      return await this.axios.delete(`/api/dashboard/${id}`);
+    } catch (error) {
+      return {
+        status: error.response.status,
+        message: error.response.statusText
+      }
+    }
   }
 
   async generateMetaUrl(token: string): Promise<any> {

@@ -9,7 +9,7 @@ class RemoveDash {
       const result = await this.removeUseCase.removeDashBoard(id);
       return { code: result.status, msg: `Dashboard ${id} was removed` };
     } catch (error) {
-      return error.message;
+      return { message: error.message };
     }
   }
 }

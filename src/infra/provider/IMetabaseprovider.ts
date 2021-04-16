@@ -6,6 +6,11 @@ interface INewDashprovider {
   description: string;
 }
 
+interface IRmDashRespprovider {
+  status: number,
+  message: string
+}
+
 interface IMetaBaseprovider {
   createMetaDash: (dash: any) => Promise<any>;
   findAllMetaDash: () => Promise<any>;
@@ -16,7 +21,7 @@ interface IMetaBaseprovider {
   findAllMetaUser: () => Promise<any[]>;
   findDashByActorId: (id: number) => Promise<any>;
   generateMetaUrl: (token: string) => Promise<any>;
-  removeMetaDashById: (id: number) => Promise<any>;
+  removeMetaDashById: (id: number) => Promise<IRmDashRespprovider>;
 }
 
-export { IMetaBaseprovider, INewDashprovider };
+export { IMetaBaseprovider, INewDashprovider, IRmDashRespprovider };

@@ -1,5 +1,6 @@
 interface IRemoveDashDTO {
-  id: number;
+  id: string;
+  dashid: number;
 }
 
 export { IRemoveDashDTO };

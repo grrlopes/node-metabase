@@ -5,6 +5,10 @@ const knexfile = require("../../../../knexfile.ts")[process.env.KNEX_ENV ?? "tes
 class Postgrestore implements IDashboardStore {
   private readonly db = knex(knexfile);
 
+  async removeDashById(id: string, dashId: number): Promise<void> {
+    await this.db("dashboard").where({ id: id, dashboard_id: dashId }).del()
+  };
+
   async save(dash: any, account: IAccountStore): Promise<any> {
     return await this.db("dashboard").insert({
       id: account.id,

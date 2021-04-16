@@ -1,7 +1,8 @@
 import { Postgrestore } from "../../infra/store/archive/Postgrestore";
-import { Dashid } from "../../entities/Dashid";
+import { RemoveDash } from "../../entities/RemoveDash";
 import { Metabaseprovider } from "../../infra/provider/archive/Metabaseprovider";
 import { IRemoveDashDTO } from "./removeDashDTO";
+import { IRmDashRespprovider } from "../../infra/provider/IMetabaseprovider";
 
 class RemoveDashUseCase {
   constructor(
@@ -9,14 +10,16 @@ class RemoveDashUseCase {
     private readonly postgreStore: Postgrestore
   ) {}
 
-  async removeDashBoard(data: IRemoveDashDTO): Promise<any> {
-    const _data = new Dashid(data);
-    const dashboard = await this.postgreStore.getDashById(_data.dashId);
+  async removeDashBoard(data: IRemoveDashDTO): Promise<IRmDashRespprovider> {
+    const { dashIds } = new RemoveDash(data);
+    const dashboard = await this.postgreStore.getDashById(dashIds.dashid);
     if (dashboard.length === 0) {
-      throw new Error("DashBoard not found");
+      throw { message: "DashBoard not found" };
     }
     this.metabaseProvider.metaBaseUrl = dashboard[0].server;
-    return await this.metabaseProvider.removeMetaDashById(_data.dashId);
+    const result = await this.metabaseProvider.removeMetaDashById(dashIds.dashid);
+    await this.postgreStore.removeDashById(dashIds.id, dashIds.dashid);
+    return result
   }
 }
 

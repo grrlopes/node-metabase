@@ -18,6 +18,7 @@ interface IDashboardStore {
   save: (dash: any, account: any) => Promise<any>;
   getDashByIds: (accountId: string, actorId: string) => Promise<IDashidStore[]>;
   getDashById: (dashId: number) => Promise<IDashidStore[]>;
+  removeDashById: (id: string, dashId: number) => Promise<void>;
 }
 
 export { IDashboardStore, IDashidStore, IAccountStore };
