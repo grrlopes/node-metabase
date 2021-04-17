@@ -2,21 +2,23 @@
 if [ -f .env ]; then
   source .env
 fi
+scripts="/scripts/book"
 
-apt update
-apt install ansible -y
+apt-get update
+apt-get install ansible -y
 echo "##############"
 echo "Next step will"
 echo "be play BooK"
 echo "##############"
 sleep 8
-ansible-playbook ./scripts/book/metabase.yml
+ansible-playbook -i .$scripts/dev.cfg \
+  .$scripts/metabase.yml
 
 source /usr/app/.env
 
 echo "###################"
-echo "Making sure the api has"
-echo " been reached out ADM_ID"
+echo "Making sure that the api"
+echo "has reached ADM_ID"
 echo "###################"
 env | grep -i ^META
 echo "###################"

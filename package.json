@@ -10,7 +10,7 @@
     "test": "jest --coverage --detectOpenHandles --testTimeout=40000 --forceExit",
     "build": "rimraf dist && tsc -p tsconfig.json",
     "clean": "rimraf dist && rimraf coverage",
-    "migration": "knex --env test --knexfile knexfile.js migrate:latest"
+    "migration": "knex --env ${KNEX_ENV} --knexfile knexfile.js migrate:latest"
   },
   "keywords": [
     "graph",
