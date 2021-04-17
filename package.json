@@ -1,6 +1,6 @@
 {
   "name": "@fieldlink/nodejs-metabase",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "That module should be used along with metabase to create metrics",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
