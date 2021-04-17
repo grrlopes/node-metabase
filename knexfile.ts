@@ -1,6 +1,6 @@
 // Update with your config settings.
 
-module.exports = {
+const knexcfg = {
   test: {
     client: "postgresql",
     connection: {
@@ -22,6 +22,7 @@ module.exports = {
   nodejs_metabase: {
     client: "postgresql",
     connection: {
+      host: "db01",
       database: "metabase",
       user: "postgres",
       password: "postgres"
@@ -37,3 +38,5 @@ module.exports = {
   }
 
 };
+
+export = knexcfg

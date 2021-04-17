@@ -6,8 +6,8 @@
     "sourceMap": false,
     "lib": ["ES2019"],
     "allowJs": true,
-    "outDir": "dist",
-    "rootDir": "./src",
+    "outDir": "./dist",
+    "rootDirs": ["./src", "knexfile.ts"],
     "removeComments": false,
     "strict": true,
     "typeRoots": [
