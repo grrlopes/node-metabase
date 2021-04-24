@@ -1,17 +1,9 @@
-import { knex } from "knex";
 import { IDashboardStore, IDashidStore, IAccountStore } from "../IPostgrestore";
-import {nodejs_metabase, test} from "../../../../knexfile";
+import { Postgresingle } from "./Postgresingle";
 
 class Postgrestore implements IDashboardStore {
-  private readonly db: any;
-  private readonly knexfile: any;
-  constructor(){
-    process.env.KNEX_ENV === "test"
-    ? this.knexfile = test
-    : this.knexfile = nodejs_metabase;
-    this.db = knex(this.knexfile)
-  }
-
+  private readonly db = Postgresingle.getInstance.getStore();
+  constructor(){}
   async removeDashById(id: string, dashId: number): Promise<void> {
     await this.db("dashboard").where({ id: id, dashboard_id: dashId }).del()
   };

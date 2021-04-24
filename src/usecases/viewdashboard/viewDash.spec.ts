@@ -1,15 +1,15 @@
-import { knex } from "knex";
 import { viewdash } from ".";
+import { Postgresingle } from "../../infra/store/archive/Postgresingle";
 import { createdash } from "../createdashboard";
-const knexfile = require("../../../knexfile")["test"];
 
-const db = knex(knexfile);
+const db = Postgresingle.getInstance.getStore();
 beforeEach(async () => {
   await db("dashboard").del();
 });
 
 afterAll(async () => {
   await db("dashboard").del();
+  db.destroy();
 });
 
 describe("### VIEW DASHBOARD BY ID ###", () => {

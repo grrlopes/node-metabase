@@ -1,17 +1,15 @@
-import { Metabaseprovider } from "../../infra/provider/archive/Metabaseprovider";
-import { knex } from "knex";
-const knexfile = require("../../../knexfile")["test"];
 import { removedash } from ".";
 import { createdash } from "../createdashboard";
+import { Postgresingle } from "../../infra/store/archive/Postgresingle";
 
-
-const db = knex(knexfile);
+const db = Postgresingle.getInstance.getStore();
 beforeEach(async () => {
   await db("dashboard").del();
 });
 
 afterAll(async () => {
   await db("dashboard").del();
+  db.destroy();
 });
 
 describe("### REMOVE DASHBOARD BY ID ###", () => {

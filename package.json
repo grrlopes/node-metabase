@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint src/** --color",
     "lint:fix": "eslint src/** --fix",
-    "test": "jest --coverage --detectOpenHandles --testTimeout=40000 --forceExit",
+    "test": "jest --coverage --testTimeout=40000",
     "build": "rimraf dist && tsc -p tsconfig.json",
     "clean": "rimraf dist && rimraf coverage",
     "migration": "knex --env ${KNEX_ENV} --knexfile knexfile.js migrate:latest"

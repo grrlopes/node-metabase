@@ -1,8 +1,7 @@
-import { knex } from "knex";
-const knexfile = require("../../../knexfile")["test"];
 import { createdash } from ".";
+import { Postgresingle } from "../../infra/store/archive/Postgresingle";
 
-const db = knex(knexfile);
+const db = Postgresingle.getInstance.getStore();
 afterEach(async () => {
   await db("dashboard").del();
 });
@@ -11,9 +10,12 @@ beforeAll(async () => {
   await db("dashboard").del();
 });
 
+afterAll(() => {
+  db.destroy()
+})
+
 describe("### CREATE DASHBOARD ###", () => {
   it("Should check partial return of dashboard created", async () => {
-    jest.setTimeout(30000)
     const dashboard = await createdash.createDashboard({
       actor_id: "2136785d-0a32-4081-9738-049f5f87ef8b",
       account_id: "2236785d-0a32-4081-9738-049f5f87ef8b",
