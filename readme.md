@@ -1,4 +1,4 @@
-# nodejs-address
+# node-metabase
 
 ## Dependencies:
 
